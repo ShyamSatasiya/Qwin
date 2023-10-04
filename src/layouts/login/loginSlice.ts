@@ -131,8 +131,8 @@ export const loginSlice = createSlice({
           .collection("users")
           .doc(action.payload.userID)
           .set(state, { merge: true })
-          .then((res) => {
-            window.location.href = "/";
+          .then((res):any => {
+            window.location.href = "/home";
           });
       }
       LOCAL_STORAGE.storeUser(state);

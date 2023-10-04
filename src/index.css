@@ -22,12 +22,49 @@ code {
   align-items: center;
 }
 
+.home .email input{
+  background-color: #f5f5f5;
+  border: 1px solid #f5f5f5;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+.home .password input{
+  background-color: #f5f5f5;
+  border: 1px solid #f5f5f5;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+.home .fname input{
+  background-color: #f5f5f5;
+  border: 1px solid #f5f5f5;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
 .home-header img {
   height: 42px;
 }
 .home .logo img {
   height: 8em;
   padding: 1em;
+  margin-bottom: 1em;
   background-color: rgb(255, 255, 255);
   transform: perspective(10em);
   border-radius: 1em;

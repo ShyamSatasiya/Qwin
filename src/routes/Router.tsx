@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { LOCAL_STORAGE } from "../config/localStorage";
 import Login from "../layouts/login/Login";
+import Signup from "../layouts/login/Signup";
 import {
   getUserFromFirestore,
   getUserLocal,
@@ -55,7 +56,8 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<UserHomePage />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/home" element={<UserHomePage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/create-event" element={<ManageEvents />} />
         <Route path="/events/:id?" element={<ManageEvents />} />

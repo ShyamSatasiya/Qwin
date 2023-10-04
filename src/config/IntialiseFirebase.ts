@@ -20,3 +20,5 @@ microsoftProvider.setCustomParameters({
 });
 
 export { firebase, firestore, auth, storage, microsoftProvider, firestoreV9 };
+// export const auth = firebase.auth();
+// export const firestore = firebase.firestore();
