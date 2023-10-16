@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getAuth, getRedirectResult, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, getRedirectResult, signInWithPopup } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import * as firebase from "firebase/compat/app";
 import { setLoading } from "../../config/commonSlice";
@@ -47,7 +47,7 @@ export const getUserFromFirestore =
     }
   };
 
-export const handleLoginFlow = () => async (dispatch: AppDispatch) => {
+export const handleLoginFlow = (email:any,password:any) => async (dispatch: AppDispatch) => {
   // check if loading
   const isLoading = LOCAL_STORAGE.isLoading();
   if (isLoading) dispatch(setLoading(true));
@@ -55,7 +55,7 @@ export const handleLoginFlow = () => async (dispatch: AppDispatch) => {
   // validate user object
   const auth = getAuth();
 
-  const redirectResult = await signInWithPopup(auth, microsoftProvider);
+  const redirectResult = await createUserWithEmailAndPassword(auth,email,password);
   console.log(redirectResult);
   if (redirectResult) {
     const user: UserDetails = { ...initialUserProfile };

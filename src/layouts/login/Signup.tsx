@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, firestore } from '../../config/IntialiseFirebase';
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { handleLoginFlow, loginWithMicrosoft } from "./loginSlice";
 
 
 const Signup = () => {
@@ -9,6 +11,7 @@ const Signup = () => {
     email: '',
     password: '',
   });
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
@@ -24,19 +27,12 @@ const handleSignup =  async () => {
 
     try {
             // Step 1: Create a new user account in Firebase Authentication
-            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-
+            // const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+            // console.log('userCredential', userCredential);
             // Step 2: Save user data to Firestore
-            if (userCredential.user != null) {
-                await firestore.collection('users').doc(userCredential.user.uid).set({
-                    name: name,
-                    email: email,
-                });
-
-                // If registration is successful, you can navigate the user to the home page.
-                navigate('/home');
+            dispatch(handleLoginFlow(email,password));
             }
-        } catch (error) {
+         catch (error) {
             console.error('Error signing up:', error);
             alert('Registration failed. Please try again.');
         }
