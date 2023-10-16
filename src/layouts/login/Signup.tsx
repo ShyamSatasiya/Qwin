@@ -13,8 +13,6 @@ const Signup = () => {
   });
   const dispatch = useAppDispatch();
 
-  const navigate = useNavigate();
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -30,7 +28,7 @@ const handleSignup =  async () => {
             // const userCredential = await auth.createUserWithEmailAndPassword(email, password);
             // console.log('userCredential', userCredential);
             // Step 2: Save user data to Firestore
-            dispatch(handleLoginFlow(email,password));
+            dispatch(handleLoginFlow(name, email, password));
             }
          catch (error) {
             console.error('Error signing up:', error);
@@ -42,7 +40,7 @@ const handleSignup =  async () => {
     <div className='home'>
       <div className="fname">
         <input
-          type="text"
+          type="displayname"
           name="name"
           placeholder="Name"
           value={formData.name}

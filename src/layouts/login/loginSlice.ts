@@ -47,25 +47,30 @@ export const getUserFromFirestore =
     }
   };
 
-export const handleLoginFlow = (email:any,password:any) => async (dispatch: AppDispatch) => {
+
+
+  
+export const handleLoginFlow = (name:any, email:any,password:any) => async (dispatch: AppDispatch) => {
   // check if loading
   const isLoading = LOCAL_STORAGE.isLoading();
   if (isLoading) dispatch(setLoading(true));
 
   // validate user object
   const auth = getAuth();
-
+  console.log(name,email,password);
   const redirectResult = await createUserWithEmailAndPassword(auth,email,password);
   console.log(redirectResult);
   if (redirectResult) {
     const user: UserDetails = { ...initialUserProfile };
-    user.name = redirectResult.user.displayName || "";
+    user.name = name || "";
     user.email = redirectResult.user.email || "";
     user.userID = redirectResult.user.uid;
     try {
       // User is signed in.
       // IdP data available in result.additionalUserInfo.profile.
       // Get the OAuth access token and ID Token
+
+      console.log(user.name, user.email, user.userID);
 
       console.log("Login Flow");
       if (user.name && user.email && user.userID) {
@@ -104,6 +109,49 @@ export const handleLoginFlow = (email:any,password:any) => async (dispatch: AppD
           dispatch(setLoading(false));
           window.location.href = "/profile";
         });
+    }
+  }
+};
+
+
+export const handleLogin = (email:any,password:any) => async (dispatch: AppDispatch) => {
+  // check if loading
+  const isLoading = LOCAL_STORAGE.isLoading();
+  if (isLoading) dispatch(setLoading(true));
+
+  // validate user object
+  const auth = getAuth();
+  console.log(email,password);
+  const redirectResult = await createUserWithEmailAndPassword(auth,email,password);
+  console.log(redirectResult);
+  if (redirectResult) {
+    const user: UserDetails = { ...initialUserProfile };
+    user.email = redirectResult.user.email || "";
+    user.userID = redirectResult.user.uid;
+    try {
+      // User is signed in.
+      // IdP data available in result.additionalUserInfo.profile.
+      // Get the OAuth access token and ID Token
+      console.log(user.email, user.userID);
+
+      console.log("Login Flow");
+      if (user.email && user.userID) {
+        // get the user from firebase, if error, then create new
+        const existingUser = await dispatch(getUserFromFirestore(user.userID));
+        dispatch(setLoading(false));
+        // to redirect user to event listing page
+        // but check if user has Student ID, Mobile No and Term Selected
+        console.log("\nLogin > Existing User\n ", existingUser);
+        if (
+          existingUser.studentID &&
+          existingUser.program &&
+          existingUser.mobileNo
+        )
+          window.location.href = "/";
+        else window.location.href = "/profile";
+      }
+    } catch (error) {
+        console.log("Trouble Logging In");
     }
   }
 };
