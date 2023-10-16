@@ -28,7 +28,12 @@ export default function UserHomePage() {
       <NewHeader />
       </div>
       
-        <button onClick={handleSignout}>Sign Out</button>
+        
+      <span
+      className="btn bg-light mt-3"
+      style={{ fontSize: "1.5em" }}
+      onClick={handleSignout}>
+      Sign Out    </span>
       
       {/* {isAdmin() ? null : (
         <div className="button-container">

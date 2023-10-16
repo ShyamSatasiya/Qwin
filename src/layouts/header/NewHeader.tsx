@@ -76,7 +76,7 @@ export default function NewHeader() {
                 <li className="nav-item">
                   <span
                     className="nav-link mb-0 px-0 py-1 alink"
-                    onClick={() => navigate("/")}
+                    onClick={() => navigate("/home")}
                   >
                     <i className="fa-solid fa-list alink color-white-imp"></i>
                     <span className="ms-1 color-white-imp">Events</span>
