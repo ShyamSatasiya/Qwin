@@ -86,7 +86,7 @@ export const handleLoginFlow = (name:any, email:any,password:any) => async (disp
           existingUser.mobileNo
         )
           window.location.href = "/";
-        else window.location.href = "/profile";
+        else window.location.href = "/";
       }
     } catch (error) {
       console.log("Creating New User");

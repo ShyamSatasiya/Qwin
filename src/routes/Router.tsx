@@ -38,17 +38,26 @@ const Router = () => {
     const user = LOCAL_STORAGE.getUser();
     if (user) dispatch(getUserFromFirestore(user.userID));
     else {
+      // window.location.href = "/login";
     }
     dispatch(getUserLocal());
     if (user === null || !user.email) {
       if (window.location.pathname !== "/login") {
       }
       // window.location.href = "/login";
-    } else if (user && !user.studentID) {
-      if (window.location.pathname !== "/profile")
-        window.location.href = "/profile";
     }
-
+    // else if (user && !user.studentID) {
+    //   if (window.location.pathname !== "/profile")
+    //     window.location.href = "/profile";
+    // }
+    if (user?.userRole !== "Admin") {
+      if (window.location.pathname == "/create-event") {
+        window.location.href = "/home";
+      } else {
+        // window.location.href = "login";
+      }
+    }
+  
     return () => {};
   }, []);
 

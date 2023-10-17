@@ -78,7 +78,7 @@ const handleLoggin = async () => {
       user.userID = userCredential.user.uid;
 
       // Now you have the user details in the 'user' object
-      console.log(user);
+      localStorage.setItem("user", JSON.stringify(user));
       window.location.href = "/home";
       // You can navigate the user to the home page
 

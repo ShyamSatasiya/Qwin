@@ -14,6 +14,7 @@ export default function UserHomePage() {
     try {
       // Sign the user out using Firebase Authentication
       await getAuth().signOut();
+      localStorage.removeItem("user");
       window.location.href = "/login";
 
     } catch (error) {
