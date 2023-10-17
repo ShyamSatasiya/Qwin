@@ -57,8 +57,7 @@ const Router = () => {
         // window.location.href = "login";
       }
     }
-  
-    return () => {};
+    // return () => {};
   }, []);
 
   return (
