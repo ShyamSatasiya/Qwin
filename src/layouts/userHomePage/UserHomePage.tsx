@@ -5,52 +5,78 @@ import EventList from "../eventsList/EventsList"
 import NewHeader from "../header/NewHeader"
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router";
+import Verify from "../login/Verify"
+
+
+// export default function UserHomePage() {
+//   const navigate = useNavigate();
+//   const [selectedView, setSeletectedView] = useState<"event" | "myEvent">(
+//     "event"
+//   );
+//   const user = useAppSelector((state) => state.login);
+//   const handleSignout = async () => {
+//     console.log("Signout");
+//     try {
+//       // Sign the user out using Firebase Authentication
+//       await getAuth().signOut();
+//       localStorage.removeItem("user");
+//       window.location.href = "/login";
+//     } catch (error) {
+//       console.error("Error signing out:", error);
+//       // Handle signout error if needed
+//     }
+//   };
+//   useEffect(() => {
+//     const fetchUser = async () => {
+//       try {
+//         // Use localStorage.getItem with await and handle the promise
+//         const user = await localStorage.getItem("user");
+
+//         // Check if 'user' exists and has an email property
+//         if (user) {
+//           const parsedUser = JSON.parse(user);
+//           if (parsedUser.email) {
+//             // User has an email, you can continue with your logic
+//           } else {
+//             // Redirect to the login page if email is missing
+//             window.location.href = "/login";
+//           }
+//         } else {
+//           // Redirect to the login page if 'user' is missing
+//           window.location.href = "/login";
+//         }
+//       } catch (error) {
+//         // Handle errors, e.g., display an error message or log the error
+//         console.error("Error fetching user:", error);
+//       }
+//     };
+
+//     fetchUser();
+//   }, []);
 
 export default function UserHomePage() {
   const navigate = useNavigate();
-  const [selectedView, setSeletectedView] = useState<"event" | "myEvent">(
-    "event"
-  );
-  const user = useAppSelector((state) => state.login);
-  const handleSignout = async () => {
-    console.log("Signout");
-    try {
-      // Sign the user out using Firebase Authentication
-      await getAuth().signOut();
-      localStorage.removeItem("user");
-      window.location.href = "/login";
-    } catch (error) {
-      console.error("Error signing out:", error);
-      // Handle signout error if needed
-    }
-  };
-  useEffect(() => {
-    const fetchUser = async () => {
+    const [selectedView, setSeletectedView] = useState<"event" | "myEvent">(
+      "event"
+    );
+    const user = useAppSelector((state) => state.login);
+    const handleSignout = async () => {
+      console.log("Signout");
       try {
-        // Use localStorage.getItem with await and handle the promise
-        const user = await localStorage.getItem("user");
-
-        // Check if 'user' exists and has an email property
-        if (user) {
-          const parsedUser = JSON.parse(user);
-          if (parsedUser.email) {
-            // User has an email, you can continue with your logic
-          } else {
-            // Redirect to the login page if email is missing
-            window.location.href = "/login";
-          }
-        } else {
-          // Redirect to the login page if 'user' is missing
-          window.location.href = "/login";
-        }
+        // Sign the user out using Firebase Authentication
+        await getAuth().signOut();
+        localStorage.removeItem("user");
+        window.location.href = "/login";
       } catch (error) {
-        // Handle errors, e.g., display an error message or log the error
-        console.error("Error fetching user:", error);
+        console.error("Error signing out:", error);
+        // Handle signout error if needed
       }
-    };
+    }; 
+    useEffect(() => {
+      Verify();
+      
+    }, []);
 
-    fetchUser();
-  }, []);
   return (
     <div className="home-page-background">
       <div>
