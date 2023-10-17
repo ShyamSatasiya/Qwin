@@ -30,22 +30,32 @@ export default function Profile() {
         <div className="mt-3 user-profile-card-body">
           <form
             onSubmit={(e) => {
-              e.preventDefault()
-              dispatch(storeUser(user))
+              e.preventDefault();
+              dispatch(storeUser(user));
             }}
           >
-            <div style={{ display: "flex", gap: "10em", height: "auto", marginTop: "1em" }}>
+            <div
+              style={{
+                display: "flex",
+                gap: "10em",
+                height: "auto",
+                marginTop: "1em",
+              }}
+            >
               <div className="user-profile-inner-card-body">
                 <h2 className="mb-3">User Profile</h2>
 
                 <form
                   className="user-profile-mb-3"
                   onSubmit={(e) => {
-                    e.preventDefault()
-                    dispatch(storeUser(user))
+                    e.preventDefault();
+                    dispatch(storeUser(user));
                   }}
                 >
-                  <label htmlFor="disabled-name" className="user-profile-form-label">
+                  <label
+                    htmlFor="disabled-name"
+                    className="user-profile-form-label"
+                  >
                     Name:
                   </label>
                   <input
@@ -54,11 +64,14 @@ export default function Profile() {
                     id="disabled-name"
                     name="disabled-name"
                     value={user.name}
-                    disabled
+                    onChange={(e) => setUser({ ...user, name: e.target.value })}
                   />
                 </form>
                 <div className="mb-3">
-                  <label htmlFor="disabled-email" className="user-profile-form-label">
+                  <label
+                    htmlFor="disabled-email"
+                    className="user-profile-form-label"
+                  >
                     Email:
                   </label>
                   <input
@@ -71,7 +84,10 @@ export default function Profile() {
                   />
                 </div>
                 <div className="user-profile-mb-3">
-                  <label htmlFor="student-id" className="user-profile-form-label">
+                  <label
+                    htmlFor="student-id"
+                    className="user-profile-form-label"
+                  >
                     Student ID:
                   </label>
                   <input
@@ -80,20 +96,27 @@ export default function Profile() {
                     id="student-id"
                     name="student-id"
                     value={user.studentID}
-                    onChange={(e) => setUser({ ...user, studentID: e.target.value })}
+                    onChange={(e) =>
+                      setUser({ ...user, studentID: e.target.value })
+                    }
                     pattern={"[0-9]{9}"}
                     maxLength={9}
                     required
                     onInvalid={(e) =>
                       //@ts-ignore
-                      e.target.setCustomValidity("Please Enter Your 9 Digit Student ID (e.g 123456789)")
+                      e.target.setCustomValidity(
+                        "Please Enter Your 9 Digit Student ID (e.g 123456789)"
+                      )
                     }
                     //@ts-ignore
                     onInput={(e) => e.target.setCustomValidity("")}
                   />
                 </div>
                 <div className="user-profile-mb-3">
-                  <label htmlFor="mobile-no" className="user-profile-form-label">
+                  <label
+                    htmlFor="mobile-no"
+                    className="user-profile-form-label"
+                  >
                     Phone No:
                   </label>
                   <input
@@ -102,13 +125,17 @@ export default function Profile() {
                     id="mobile-no"
                     name="mobile-no"
                     value={user.mobileNo}
-                    onChange={(e) => setUser({ ...user, mobileNo: e.target.value })}
+                    onChange={(e) =>
+                      setUser({ ...user, mobileNo: e.target.value })
+                    }
                     pattern={"[0-9]{10}"}
                     maxLength={10}
                     required
                     onInvalid={(e) =>
                       // @ts-ignore
-                      e.target.setCustomValidity("Please Enter Your 10 Digit Mobile No. (e.g 9998887777)")
+                      e.target.setCustomValidity(
+                        "Please Enter Your 10 Digit Mobile No. (e.g 9998887777)"
+                      )
                     }
                     // @ts-ignore
                     onInput={(e) => e.target.setCustomValidity("")}
@@ -124,7 +151,9 @@ export default function Profile() {
                     id="program"
                     name="program"
                     value={user.program}
-                    onChange={(e) => setUser({ ...user, program: e.target.value })}
+                    onChange={(e) =>
+                      setUser({ ...user, program: e.target.value })
+                    }
                   >
                     <option value="">Select Program</option>
                     <option value="MAC Summer 22">MAC - Summer 22</option>
@@ -152,7 +181,11 @@ export default function Profile() {
           <div className="row">
             <div className="col-12">
               <div className="card mb-4">
-                {user.user_events?.length ? <h2 className="mt-4">My Bookings ({user.user_events?.length})</h2> : null}
+                {user.user_events?.length ? (
+                  <h2 className="mt-4">
+                    My Bookings ({user.user_events?.length})
+                  </h2>
+                ) : null}
                 <div className="container-fluid py-4">
                   <div className="row">
                     {user.user_events?.length ? (
@@ -178,5 +211,5 @@ export default function Profile() {
         </div>
       </div>
     </React.Fragment>
-  )
+  );
 }

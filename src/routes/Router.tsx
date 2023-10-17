@@ -55,12 +55,12 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-      <Route path="/home" element={<UserHomePage />} />
+        <Route path="/home" element={<UserHomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/create-event" element={<ManageEvents />} />
-        {/* <Route path="/events/:id?" element={<ManageEvents />} /> */}
+        <Route path="/events/:id?" element={<ManageEvents />} />
         <Route path="/start-verification" element={<Verification />} />
         <Route path="/qr-scanner" element={<QrScan />} />
         <Route path="/dashboard" element={<Dashboard />} />
