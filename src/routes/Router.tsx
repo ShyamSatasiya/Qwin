@@ -43,21 +43,26 @@ const Router = () => {
     dispatch(getUserLocal());
     if (user === null || !user.email) {
       if (window.location.pathname !== "/login") {
+        window.location.href = "/login";
       }
-      // window.location.href = "/login";
     }
-    // else if (user && !user.studentID) {
-    //   if (window.location.pathname !== "/profile")
-    //     window.location.href = "/profile";
-    // }
+
     if (user?.userRole !== "Admin") {
-      if (window.location.pathname == "/create-event") {
+      if (
+        window.location.pathname == "/dashboard" ||
+        window.location.pathname == "/create-event" ||
+        window.location.pathname == "/start-verification" ||
+        window.location.pathname == "/demoday-choose-project"
+      ) {
         window.location.href = "/home";
-      } else {
-        // window.location.href = "login";
+      }
+    } else {
+      if (window.location.pathname == "/profile") {
+        window.location.href = "/home";
       }
     }
-    // return () => {};
+
+    return () => {};
   }, []);
 
   return (

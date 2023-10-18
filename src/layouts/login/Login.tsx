@@ -76,7 +76,7 @@ const Login = () => {
         password
       );
       console.log(userCredential);
-      if (userCredential.user) {
+      if (userCredential?.user) {
         const user: UserDetails = { ...initialUserProfile };
         user.email = userCredential.user.email || "";
         user.userID = userCredential.user.uid;
