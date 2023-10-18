@@ -14,33 +14,33 @@ export default function UserHomePage() {
       "event"
     );
     const user = useAppSelector((state) => state.login);
-    const handleSignout = async () => {
-      console.log("Signout");
-      try {
-        // Sign the user out using Firebase Authentication
-        await getAuth().signOut();
-        localStorage.removeItem("user");
-        window.location.href = "/login";
-      } catch (error) {
-        console.error("Error signing out:", error);
-        // Handle signout error if needed
-      }
-    }; 
+    // const handleSignout = async () => {
+    //   console.log("Signout");
+    //   try {
+    //     // Sign the user out using Firebase Authentication
+    //     await getAuth().signOut();
+    //     localStorage.removeItem("user");
+    //     window.location.href = "/login";
+    //   } catch (error) {
+    //     console.error("Error signing out:", error);
+    //     // Handle signout error if needed
+    //   }
+    // }; 
   
 
   return (
-    <div className="home-page-background">
+    <div className="home-page-background" >
       <div>
         <NewHeader />
       </div>
 
-      <span
+      {/* <span
         className="btn bg-light mt-3"
         style={{ fontSize: "1.5em" }}
         onClick={handleSignout}
       >
         Sign Out{" "}
-      </span>
+      </span> */}
 
       {/* {isAdmin() ? null : (
         <div className="button-container">
@@ -61,11 +61,11 @@ export default function UserHomePage() {
           </button>
         </div>
       )} */}
-
+      
       {selectedView === "event" ? (
         <EventList />
       ) : (
-        <div>
+        <div className="content">
           {user.user_events ? (
             user.user_events.map((event) => (
               <div key={event.id}>

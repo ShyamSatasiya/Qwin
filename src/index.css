@@ -10,6 +10,22 @@ code {
   margin: 0 !important;
 }
 
+.flex-container {
+  display: flex;
+}
+
+.vertical-sidebar {
+  flex: 0 0 250px; /* Fixed width for the sidebar */
+  background-color: #333; /* Adjust the background color as needed */
+  color: white;
+}
+
+.content {
+  flex: 1; /* Takes up remaining available space */
+  padding: 20px; /* Add padding for content area */
+}
+
+
 .home {
   height: 100vh;
   width: 100vw;
