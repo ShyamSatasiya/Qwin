@@ -43,118 +43,125 @@ export const getUserFromFirestore =
       } else throw Error("User Not Found");
     } catch (error) {
       console.log("Error Getting User From Firestore", error);
+      alert("User not found in the database");
       throw error;
     }
   };
 
-
-
-  
-export const handleLoginFlow = (name:any, email:any,password:any) => async (dispatch: AppDispatch) => {
-  // check if loading
-  const isLoading = LOCAL_STORAGE.isLoading();
-  if (isLoading) dispatch(setLoading(true));
-
-  // validate user object
-  const auth = getAuth();
-  console.log(name,email,password);
-  const redirectResult = await createUserWithEmailAndPassword(auth,email,password);
-  console.log(redirectResult);
-  if (redirectResult) {
-    const user: UserDetails = { ...initialUserProfile };
-    user.name = name || "";
-    user.email = redirectResult.user.email || "";
-    user.userID = redirectResult.user.uid;
+export const handleLoginFlow =
+  (name: any, email: any, password: any) => async (dispatch: AppDispatch) => {
     try {
-      // User is signed in.
-      // IdP data available in result.additionalUserInfo.profile.
-      // Get the OAuth access token and ID Token
+      // Check if loading
+      const isLoading = LOCAL_STORAGE.isLoading();
+      if (isLoading) {
+        dispatch(setLoading(true));
+      }
 
-      console.log(user.name, user.email, user.userID);
+      // Create a user with email and password
+      const auth = getAuth();
+      const redirectResult = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-      console.log("Login Flow");
-      if (user.name && user.email && user.userID) {
-        // get the user from firebase, if error, then create new
-        const existingUser = await dispatch(getUserFromFirestore(user.userID));
-        dispatch(setLoading(false));
-        // to redirect user to event listing page
-        // but check if user has Student ID, Mobile No and Term Selected
-        console.log("\nLogin > Existing User\n ", existingUser);
-        if (
-          existingUser.studentID &&
-          existingUser.program &&
-          existingUser.mobileNo
-        )
-          window.location.href = "/";
-        else window.location.href = "/";
+      if (redirectResult) {
+        // Initialize the user object
+        const user = {
+          ...initialUserProfile,
+          name: name || "",
+          email: redirectResult.user.email || "",
+          userID: redirectResult.user.uid,
+        };
+
+        if (user.userID) {
+          // User is signed in. IdP data available in result.additionalUserInfo.profile.
+          // Get the OAuth access token and ID Token
+
+          console.log("Login Flow");
+          console.log("Creating New User");
+
+          await firestore
+            .collection("users")
+            .doc(user.userID)
+            .set(
+              {
+                name: user.name,
+                createdAt:
+                  firebase.default.firestore.FieldValue.serverTimestamp(),
+                email: user.email,
+                userID: user.userID,
+                userRole: USER_ROLES.Student, // Define USER_ROLES
+              },
+              { merge: true }
+            )
+            .then((res) => {
+              console.log("New User Created", user);
+              dispatch(storeUserLocal(user));
+              dispatch(setLoading(false));
+            });
+        } else {
+          console.error("error creating user");
+
+          // Redirect to '/home' if needed
+          // window.location.href = '/home';
+        }
       }
     } catch (error) {
-      console.log("Creating New User");
-
-      firestore
-        .collection("users")
-        .doc(user.userID)
-        .set(
-          {
-            name: user.name,
-            createdAt: firebase.default.firestore.FieldValue.serverTimestamp(),
-            email: user.email,
-            userID: user.userID,
-            userRole: USER_ROLES.Student,
-          },
-          { merge: true }
-        )
-        .then((res) => {
-          dispatch(storeUserLocal(user));
-          dispatch(setLoading(false));
-          window.location.href = "/profile";
-        });
+      // Handle errors
+      alert("email address already in use");
+      throw new Error("email address already in use");
     }
-  }
-};
+  };
 
+// export const handleLogin =
+//   (email: any, password: any) => async (dispatch: AppDispatch) => {
+//     // check if loading
+//     const isLoading = LOCAL_STORAGE.isLoading();
+//     if (isLoading) dispatch(setLoading(true));
 
-export const handleLogin = (email:any,password:any) => async (dispatch: AppDispatch) => {
-  // check if loading
-  const isLoading = LOCAL_STORAGE.isLoading();
-  if (isLoading) dispatch(setLoading(true));
+//     // validate user object
+//     const auth = getAuth();
+//     console.log(email, password);
+//     const redirectResult = await createUserWithEmailAndPassword(
+//       auth,
+//       email,
+//       password
+//     );
+//     console.log(redirectResult);
+//     if (redirectResult) {
+//       const user: UserDetails = { ...initialUserProfile };
+//       user.email = redirectResult.user.email || "";
+//       user.userID = redirectResult.user.uid;
+//       try {
+//         // User is signed in.
+//         // IdP data available in result.additionalUserInfo.profile.
+//         // Get the OAuth access token and ID Token
+//         console.log(user.email, user.userID);
 
-  // validate user object
-  const auth = getAuth();
-  console.log(email,password);
-  const redirectResult = await createUserWithEmailAndPassword(auth,email,password);
-  console.log(redirectResult);
-  if (redirectResult) {
-    const user: UserDetails = { ...initialUserProfile };
-    user.email = redirectResult.user.email || "";
-    user.userID = redirectResult.user.uid;
-    try {
-      // User is signed in.
-      // IdP data available in result.additionalUserInfo.profile.
-      // Get the OAuth access token and ID Token
-      console.log(user.email, user.userID);
-
-      console.log("Login Flow");
-      if (user.email && user.userID) {
-        // get the user from firebase, if error, then create new
-        const existingUser = await dispatch(getUserFromFirestore(user.userID));
-        dispatch(setLoading(false));
-        // to redirect user to event listing page
-        // but check if user has Student ID, Mobile No and Term Selected
-        console.log("\nLogin > Existing User\n ", existingUser);
-        if (
-          existingUser.studentID &&
-          existingUser.program &&
-          existingUser.mobileNo
-        )
-          window.location.href = "/";
-        else window.location.href = "/profile";
-      }
-    } catch (error) {
-        console.log("Trouble Logging In");
-    }
-  }
-};
+//         console.log("Login Flow");
+//         if (user.email && user.userID) {
+//           // get the user from firebase, if error, then create new
+//           const existingUser = await dispatch(
+//             getUserFromFirestore(user.userID)
+//           );
+//           dispatch(setLoading(false));
+//           // to redirect user to event listing page
+//           // but check if user has Student ID, Mobile No and Term Selected
+//           console.log("\nLogin > Existing User\n ", existingUser);
+//           if (
+//             existingUser.studentID &&
+//             existingUser.program &&
+//             existingUser.mobileNo
+//           )
+//             window.location.href = "/";
+//           else window.location.href = "/profile";
+//         }
+//       } catch (error) {
+//         console.log("Trouble Logging In");
+//       }
+//     }
+//   };
 
 export const loginSlice = createSlice({
   name: "login",
@@ -173,14 +180,13 @@ export const loginSlice = createSlice({
         if (!action.payload.events_attended) state.events_attended = [];
         if (!action.payload.user_events) state.user_events = [];
         if (!action.payload.program) state.program = "";
-        console.log(action.payload);
 
         firestore
           .collection("users")
           .doc(action.payload.userID)
           .set(state, { merge: true })
-          .then((res):any => {
-            window.location.href = "/home";
+          .then((res): any => {
+            // window.location.href = "/home";
           });
       }
       LOCAL_STORAGE.storeUser(state);

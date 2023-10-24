@@ -70,7 +70,12 @@ const ChooseProjects = () => {
                               <td>{team.projectTitle}</td>
                               <td>{team.participants.join(", ")}</td>
                               {/* <td>{team.projectDescription}</td> */}
-                              <td style={{ whiteSpace: "pre-line", textAlign: "justify" }}>
+                              <td
+                                style={{
+                                  whiteSpace: "pre-line",
+                                  textAlign: "justify",
+                                }}
+                              >
                                 {team.projectDescription}
                               </td>
                             </tr>
@@ -82,14 +87,21 @@ const ChooseProjects = () => {
                           type="button"
                           className="cancel-button btn bg-gradient-success my-4 mb-2"
                           onClick={(e) => {
-                            csvRef.current?.link.click()
+                            csvRef.current?.link.click();
                           }}
                         >
                           Download CSV{" "}
                           <CSVDownload
                             csvRef={csvRef}
-                            filename="Demoday Teams.xlsx"
-                            data={[["Team Name", "Project Title", "Participants", "Description"]].concat(
+                            filename="Demoday Teams.csv"
+                            data={[
+                              [
+                                "Team Name",
+                                "Project Title",
+                                "Participants",
+                                "Description",
+                              ],
+                            ].concat(
                               teamData.map((details) => [
                                 details.teamName,
                                 details.projectTitle,
@@ -111,7 +123,7 @@ const ChooseProjects = () => {
         )}
       </div>
     </React.Fragment>
-  )
+  );
 }
 
 export default ChooseProjects

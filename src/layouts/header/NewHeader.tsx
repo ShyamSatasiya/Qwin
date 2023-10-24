@@ -1,13 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LOCAL_STORAGE } from "../../config/localStorage";
 import { USER_ROLES } from "../../config/helper";
 
 export default function NewHeader() {
   const navigate = useNavigate();
-  const [userRole, setIsAdmin] = useState(LOCAL_STORAGE.getUserRole());
-  console.log("User Role: ", userRole);
+  const [userRole, setUserRole] = useState(null); // Initialize userRole as null
 
+  useEffect(() => {
+    async function fetchUserRole() {
+      const data = await localStorage.getItem("UserRole");
+      console.log(data); // No need for 'await' here
+      let newData;
+
+      if (data !== null) {
+        try {
+          newData = JSON.parse(data);
+          if (!newData) {
+            console.log("Data is not a valid JSON object.");
+          }
+        } catch (error) {
+          console.error("Error parsing JSON:", error);
+          newData = null; // Set to null if parsing fails
+        }
+      } else {
+        console.log("No User Role Found");
+        // Handle the case where 'data' is null (e.g., item doesn't exist)
+      }
+      // Set userRole in the component's state
+      setUserRole(newData?.UserRole || null);
+    }
+    fetchUserRole();
+  }, []); // Run this effect only once
+
+  if (userRole === null) {
+    // Show a loading state until userRole is fetched
+    return <div>Loading...</div>;
+  }
+  console.log(userRole);
   return (
     <div className="container-fluid g-sidenav-show">
       <div
@@ -61,7 +91,7 @@ export default function NewHeader() {
                   </li>
                 ) : null}
 
-                {userRole === USER_ROLES.Student ? (
+                {userRole && userRole === USER_ROLES.Student ? (
                   <li className="nav-item">
                     <span
                       className="nav-link mb-0 px-0 py-1 alink"
@@ -83,7 +113,7 @@ export default function NewHeader() {
                   </span>
                 </li>
 
-                {userRole === USER_ROLES.Admin ? (
+                {userRole && userRole === USER_ROLES.Admin ? (
                   <li className="nav-item">
                     <span
                       className="nav-link mb-0 px-0 py-1 alink"
@@ -94,7 +124,7 @@ export default function NewHeader() {
                     </span>
                   </li>
                 ) : null}
-                {userRole === USER_ROLES.Student ? (
+                {userRole && userRole === USER_ROLES.Student ? (
                   <li className="nav-item">
                     <span
                       className="nav-link mb-0 px-0 py-1 alink"
@@ -105,7 +135,7 @@ export default function NewHeader() {
                     </span>
                   </li>
                 ) : null}
-                {userRole === USER_ROLES.Admin ? (
+                {userRole && userRole === USER_ROLES.Admin ? (
                   <li className="nav-item">
                     <span
                       className="nav-link mb-0 px-0 py-1 alink active"
@@ -115,7 +145,7 @@ export default function NewHeader() {
                       <span className="ms-1 color-white-imp">Dashboard</span>
                     </span>
                   </li>
-                ) : userRole === USER_ROLES.Student ? (
+                ) : userRole && userRole === USER_ROLES.Student ? (
                   <li className="nav-item">
                     <span
                       className="nav-link mb-0 px-0 py-1 alink active"

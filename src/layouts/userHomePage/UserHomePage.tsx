@@ -5,7 +5,7 @@ import EventList from "../eventsList/EventsList"
 import NewHeader from "../header/NewHeader"
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router";
-// import Verify from "../login/Verify"
+
 
 
 export default function UserHomePage() {
@@ -20,6 +20,7 @@ export default function UserHomePage() {
         // Sign the user out using Firebase Authentication
         await getAuth().signOut();
         localStorage.removeItem("user");
+        localStorage.removeItem("UserRole");
         window.location.href = "/login";
       } catch (error) {
         console.error("Error signing out:", error);

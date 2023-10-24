@@ -47,8 +47,14 @@ export function isLoading(loading?: boolean) {
 
 export function getUserRole(userRole?: string): string {
   if (userRole !== undefined) {
-    localStorage.setItem(LOCAL_STORAGE_KEYS.userRole, JSON.stringify({ [LOCAL_STORAGE_KEYS.userRole]: userRole }))
-    return userRole
+    localStorage.setItem(
+      LOCAL_STORAGE_KEYS.userRole,
+      JSON.stringify({
+        [LOCAL_STORAGE_KEYS.userRole]: userRole ? userRole : "Student",
+      })
+    );
+
+    return userRole;
   } else {
     const temp = localStorage.getItem(LOCAL_STORAGE_KEYS.userRole)
     try {
