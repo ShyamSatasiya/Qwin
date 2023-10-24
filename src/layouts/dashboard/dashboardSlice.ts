@@ -15,16 +15,16 @@ export const initialDashboard: Dashboard = {
 
 export const getAllUsers = () => async (dispath: AppDispatch) => {
   try {
-    const userRef = collection(firestoreV9, FIREBASE_COLLECTIONS.users)
+    const userRef = collection(firestoreV9, FIREBASE_COLLECTIONS.users);
 
-    const users: Dashboard["users"] = []
-    const snapShot = await getDocs(userRef)
-    //
+    const users: Dashboard["users"] = [];
+    const snapShot = await getDocs(userRef);
+
     snapShot.forEach((doc) => {
-      const { createdAt, ...user } = doc.data()
-      users.push((user as unknown) as UserDetails)
-    })
-    dispath(storeAllUsers(users))
+      const { createdAt, ...user } = doc.data();
+      users.push(user as unknown as UserDetails);
+    });
+    dispath(storeAllUsers(users));
   } catch (error) {}
 }
 

@@ -21,6 +21,7 @@ import { useAppDispatch } from "../store/store";
 import { log } from "console";
 import { USER_ROLES } from "../config/helper";
 import CreateDemoDayEvent from "../layouts/DemoDay/CreateDemoDayEvent";
+import ResetPassword from "../layouts/login/ResetPassword";
 // import Dashboard from "../components/dashboard/Dashboard";
 // import NotProtectedRoute from "./NotProtectedRoute";
 // import EventDetail from "../components/event/EventDetail";
@@ -71,6 +72,7 @@ const Router = () => {
         <Route path="/home" element={<UserHomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/create-event" element={<ManageEvents />} />
         <Route path="/events/:id?" element={<ManageEvents />} />
