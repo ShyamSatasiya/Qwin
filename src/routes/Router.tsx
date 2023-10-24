@@ -49,15 +49,15 @@ const Router = () => {
 
     if (user?.userRole !== "Admin") {
       if (
-        window.location.pathname == "/dashboard" ||
-        window.location.pathname == "/create-event" ||
-        window.location.pathname == "/start-verification" ||
-        window.location.pathname == "/demoday-choose-project"
+        window.location.pathname === "/dashboard" ||
+        window.location.pathname === "/create-event" ||
+        window.location.pathname === "/start-verification" ||
+        window.location.pathname === "/demoday-choose-project"
       ) {
         window.location.href = "/home";
       }
     } else {
-      if (window.location.pathname == "/profile") {
+      if (window.location.pathname === "/profile") {
         window.location.href = "/home";
       }
     }

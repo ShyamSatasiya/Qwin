@@ -142,6 +142,8 @@ import { USER_ROLES } from '../../config/helper';
 import { getAuth } from "firebase/auth";
 
 export default function NewHeader() {
+
+
   const navigate = useNavigate();
   const [userRole, setIsAdmin] = useState(LOCAL_STORAGE.getUserRole());
   const handleSignout = async () => {
@@ -158,8 +160,10 @@ export default function NewHeader() {
   }; 
 
   return (
-    <div className="flex-container">
-      <div className="vertical-sidebar">
+
+    
+    <div>
+      <div>
         <div className="avatar avatar-xl position-relative">
           <img
             src={require('../../assets/qwin-logo.jpg')}
@@ -174,11 +178,17 @@ export default function NewHeader() {
           <p className="mb-0 font-weight-bold text-sm">By Quent</p>
         </div>
         <ul className="nav">
+        <li className="nav-item">
+            <span className="nav-link alink" onClick={() => navigate('/home')}>
+              <i className="fa-solid fa-list alink color-white-imp" style={{fontSize: "18px"}}></i>
+              <span className="ms-1 color-white-imp" style={{fontSize: "18px"}}>Events</span>
+            </span>
+          </li>
           {userRole === USER_ROLES.Professor || userRole === USER_ROLES.Admin ? (
             <li className="nav-item">
               <span
                 className="nav-link alink"
-                onClick={() => navigate('/demoday-page')}
+                onClick={() => navigate('https://uwin-demoday.vercel.app/')}
               >
                 <i className="fa-solid fa-id-card alink color-white-imp"></i>
                 <span className="ms-1 color-white-imp">DemoDay</span>
@@ -189,27 +199,22 @@ export default function NewHeader() {
             <li className="nav-item">
               <span
                 className="nav-link alink"
-                onClick={() => navigate('/demoday-page')}
+                onClick={() => window.location.href = 'https://uwin-demoday.vercel.app/'}
               >
-                <i className="fa-solid fa-id-card alink color-white-imp"></i>
-                <span className="ms-1 color-white-imp">DemoDay</span>
+                <i className="fa-solid fa-id-card alink color-white-imp" style={{fontSize: "18px"}}></i>
+                <span className="ms-1 color-white-imp" style={{fontSize: "18px"}}>DemoDay</span>
               </span>
             </li>
           ): null}
-          <li className="nav-item">
-            <span className="nav-link alink" onClick={() => navigate('/home')}>
-              <i className="fa-solid fa-list alink color-white-imp"></i>
-              <span className="ms-1 color-white-imp">Events</span>
-            </span>
-          </li>
+          
           {userRole === USER_ROLES.Admin ? (
             <li className="nav-item">
               <span
                 className="nav-link alink"
                 onClick={() => navigate('/create-event')}
               >
-                <i className="fa-solid fa-plus alink color-white-imp"></i>
-                <span className="ms-1 color-white-imp">Create</span>
+                <i className="fa-solid fa-plus alink color-white-imp" style={{fontSize: "18px"}}></i>
+                <span className="ms-1 color-white-imp" style={{fontSize: "18px"}}>Create</span>
               </span>
             </li>
           ): null}
@@ -219,8 +224,8 @@ export default function NewHeader() {
                 className="nav-link alink"
                 onClick={() => navigate('/qr-scanner')}
               >
-                <i className="fa-solid navbar-icon fa-qrcode alink color-white-imp"></i>
-                <span className="ms-1 color-white-imp">Scan QR</span>
+                <i className="fa-solid navbar-icon fa-qrcode alink color-white-imp" style={{fontSize: "18px"}}></i>
+                <span className="ms-1 color-white-imp" style={{fontSize: "18px"}}>Scan QR</span>
               </span>
             </li>
           ): null}
@@ -230,8 +235,8 @@ export default function NewHeader() {
                 className="nav-link alink active"
                 onClick={() => navigate('/dashboard')}
               >
-                <i className="fa-solid navbar-icon fa-table alink color-white-imp"></i>
-                <span className="ms-1 color-white-imp">Dashboard</span>
+                <i className="fa-solid navbar-icon fa-table alink color-white-imp" style={{fontSize: "18px"}}></i>
+                <span className="ms-1 color-white-imp" style={{fontSize: "18px"}}>Dashboard</span>
               </span>
             </li>
           ): null}
@@ -241,18 +246,18 @@ export default function NewHeader() {
                 className="nav-link alink active"
                 onClick={() => navigate('/profile')}
               >
-                <i className="fa-regular navbar-icon fa-user text-reset alink color-white-imp"></i>
-                <span className="ms-1 color-white-imp">Profile</span>
+                <i className="fa-regular navbar-icon fa-user text-reset alink color-white-imp" style={{fontSize: "18px"}}></i>
+                <span className="ms-1 color-white-imp" style={{fontSize: "18px"}}>Profile</span>
               </span>
             </li>
           ): null}
-          <li>
+          <li className="nav-item" >
             <span
               className="nav-link alink"
               onClick={handleSignout}
             >
-              <i className="fa-solid fa-sign-out alink color-white-imp"></i>
-              <span className="ms-1 color-white-imp">Sign Out</span>
+              <i className="fa-solid fa-sign-out alink color-white-imp" style={{fontSize: "18px"}}></i>
+              <span className="ms-1 color-white-imp" style={{fontSize: "18px"}}>Sign Out</span>
             </span>
           </li>
         </ul>
