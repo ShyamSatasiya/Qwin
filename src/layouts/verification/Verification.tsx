@@ -32,13 +32,20 @@ export default function Verification() {
   }, [state])
   return (
     <React.Fragment>
-      <NewHeader />
-      <div className="qr-code-container">
-        <QRCode
-          value={JSON.stringify({ eventID: verificationData.event.id, hash: verificationData.hash })}
-          size={256}
-        />
+      <div className="page-container">
+        <div className="navigation-bar">
+          <NewHeader />
+        </div>
+        <div className="qr-code-container">
+          <QRCode
+            value={JSON.stringify({
+              eventID: verificationData.event.id,
+              hash: verificationData.hash,
+            })}
+            size={256}
+          />
+        </div>
       </div>
     </React.Fragment>
-  )
+  );
 }

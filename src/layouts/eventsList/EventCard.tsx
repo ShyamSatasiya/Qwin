@@ -25,15 +25,21 @@ export default function EventCard({ event }: { event: EventDetails }) {
         <div className={`${event.isExpired ? "" : ""}card-body px-1 pb-0`}>
           {/* <p className="text-gradient text-dark mb-2 text-sm">Project #2</p> */}
           <h5>{event.title}</h5>
-          <p className="mb-4 text-sm">{new Date(event.date).toLocaleString("en-US", DATE_FORMAT_OPTION)}</p>
+          <p className="mb-4 text-sm">
+            {new Date(event.date).toLocaleString("en-US", DATE_FORMAT_OPTION)}
+          </p>
           <p className="mb-4 text-sm">{event.address}</p>
-          <div className="d-flex align-items-center justify-content-between">
+          <div
+            className="d-flex align-items-center justify-content-between "
+            style={{ flexWrap: "wrap", gap: "0.5rem" }}
+          >
             {userRole === USER_ROLES.Admin ? (
               <span
                 className="btn btn-outline-dark btn-dark btn-sm mb-0"
                 onClick={() => {
-                  navigate("/events/" + event.id)
+                  navigate("/events/" + event.id);
                 }}
+                style={{ cursor: "pointer", width: "100%" }}
               >
                 Edit Details
               </span>
@@ -43,8 +49,9 @@ export default function EventCard({ event }: { event: EventDetails }) {
                 data-bs-toggle="modal"
                 data-bs-target={"#modal-default" + event.id}
                 data-backdrop="false"
+                style={{ cursor: "pointer", width: "100%" }}
                 onClick={() => {
-                  setIsExpanded(event.id)
+                  setIsExpanded(event.id);
                 }}
               >
                 View Details
@@ -55,28 +62,40 @@ export default function EventCard({ event }: { event: EventDetails }) {
               <button
                 className="btn btn-info btn-sm mb-0"
                 onClick={(e) => {
-                  navigate("/start-verification", { state: event })
+                  navigate("/start-verification", { state: event });
                 }}
+                style={{ cursor: "pointer", width: "100%" }}
               >
                 Start QR
               </button>
             ) : userRole === USER_ROLES.Student ? (
               <button
-                className={`btn btn-sm mb-0 ${isEventAttended ? "btn-outline-dark btn-white" : ""}
+                className={`btn btn-sm mb-0 ${
+                  isEventAttended ? "btn-outline-dark btn-white" : ""
+                }
               ${event.isExpired ? "btn-outline-dark" : ""}
-              ${isEventRegistered ? "btn-outline-danger" : "btn-outline-success"}`}
+              ${
+                isEventRegistered ? "btn-outline-danger" : "btn-outline-success"
+              }`}
                 disabled={isEventAttended || event.isExpired}
+                style={{ cursor: "pointer", width: "100%" }}
                 onClick={(e) => {
                   if (isEventRegistered) {
-                    console.log("Calling Unregister")
-                    dispatch(unregisterEvent(event, user))
+                    console.log("Calling Unregister");
+                    dispatch(unregisterEvent(event, user));
                   } else {
-                    console.log("Calling Register")
-                    dispatch(registerEvent(event, user))
+                    console.log("Calling Register");
+                    dispatch(registerEvent(event, user));
                   }
                 }}
               >
-                {isEventAttended ? "Attended" : event.isExpired ? "Expired" : isEventRegistered ? "Cancel" : "Register"}
+                {isEventAttended
+                  ? "Attended"
+                  : event.isExpired
+                  ? "Expired"
+                  : isEventRegistered
+                  ? "Cancel"
+                  : "Register"}
               </button>
             ) : null}
           </div>
@@ -84,12 +103,19 @@ export default function EventCard({ event }: { event: EventDetails }) {
       </div>
       <div
         className="modal"
-        style={isExpanded === event.id ? { visibility: "visible", backgroundColor: "rgba(0,0,0,0.6)" } : { visibility: "hidden" }}
+        style={
+          isExpanded === event.id
+            ? { visibility: "visible", backgroundColor: "rgba(0,0,0,0.6)" }
+            : { visibility: "hidden" }
+        }
         id={"modal-default" + event.id}
         tabIndex={-1}
         aria-labelledby={"modal-default" + event.id}
       >
-        <div className="modal-dialog modal modal-dialog-centered modal" role="document">
+        <div
+          className="modal-dialog modal modal-dialog-centered modal"
+          role="document"
+        >
           <div className="modal-content">
             <div className="modal-header">
               <h6 className="modal-title" id="modal-title-default">
@@ -122,5 +148,5 @@ export default function EventCard({ event }: { event: EventDetails }) {
         </div>
       </div>
     </>
-  )
+  );
 }

@@ -13,31 +13,31 @@ export default function UserHomePage() {
 
   const [selectedView, setSeletectedView] = useState<'event' | 'myEvent'>('event');
   const user = useAppSelector((state) => state.login);
+ 
+   
+    return (
+      <div className="page-container">
+        <div className="navigation-bar">
+          <NewHeader />
+        </div>
 
-
-  return (
-    <div className="page-container">
-      <div className="navigation-bar">
-        <NewHeader />
+        <div className="content-display">
+          {selectedView === "event" ? (
+            <EventList />
+          ) : (
+            <div>
+              {user.user_events ? (
+                user.user_events.map((event) => (
+                  <div key={event.id}>
+                    <EventCard event={event} />
+                  </div>
+                ))
+              ) : (
+                <h1>No Registered Events</h1>
+              )}
+            </div>
+          )}
+        </div>
       </div>
-
-      <div className="content-display">
-        {selectedView === 'event' ? (
-          <EventList />
-        ) : (
-          <div>
-            {user.user_events ? (
-              user.user_events.map((event) => (
-                <div key={event.id}>
-                  <EventCard event={event} />
-                </div>
-              ))
-            ) : (
-              <h1>No Registered Events</h1>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
-  );
+    );
 }

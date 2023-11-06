@@ -41,16 +41,15 @@ export default function ManageEvents() {
   }, [reduxEvent]);
 
   return (
-    <div>
-      <NewHeader />
-      <main
-        style={{ position: "relative", top: "14em" }}
-        className="main-content mt-0"
-      >
-        <section className="row">
+    <div className="page-container">
+      <div className="navigation-bar">
+        <NewHeader />
+      </div>
+      <main style={{ position: "relative" }} className="main-content mt-0">
+        <section className="row" style={{ marginTop: "20px" }}>
           <div className="col-6">
             <div className="container mb-5">
-              <div className="row mt-lg-n10 mt-md-n11 mt-n12">
+              <div className="row">
                 <div className="col-12 mx-auto">
                   <div className="card z-index-0">
                     <div>

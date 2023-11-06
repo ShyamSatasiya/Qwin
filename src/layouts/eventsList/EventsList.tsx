@@ -30,7 +30,7 @@ const EventList = () => {
     //   </div>
     // </React.Fragment>
     <div className="g-sidenav-show">
-      <div className="main-content position-relative max-height-vh-100 h-100">
+      <div className="main-content position-relative">
         {events?.length === 0 && <p>No events found.</p>}
 
         <div className="container-fluid py-4">
@@ -52,7 +52,7 @@ const EventList = () => {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default EventList
